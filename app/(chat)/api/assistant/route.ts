@@ -27,7 +27,6 @@ export async function POST(req: Request) {
       attachments: string;
     };
   } = await req.json();
-  console.log(input, 'input');
 
   // Create a thread if needed
   const threadId = input.threadId
@@ -39,7 +38,7 @@ export async function POST(req: Request) {
     content: [{ type: 'text', text: input.message }],
   };
 
-  if (input.data.attachments && typeof userMessage.content !== 'string') {
+  if (input.data?.attachments && typeof userMessage.content !== 'string') {
     userMessage.content.push({
       type: 'image_url',
       image_url: {
@@ -54,6 +53,17 @@ export async function POST(req: Request) {
     userMessage
   );
 
+  if (!input.threadId) {
+    const cookieStore = await cookies();
+    const userId = cookieStore.get('user')?.value ?? '';
+
+    const title = await generateTitleFromUserMessage({
+      message: createdMessage as any,
+    });
+    await saveChat({ id: threadId, userId: userId, title });
+    await saveChatId(threadId);
+  }
+
   await saveMessages({
     messages: [
       {
@@ -65,17 +75,6 @@ export async function POST(req: Request) {
       },
     ],
   });
-
-  if (!input.threadId) {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get('user')?.value ?? '';
-
-    const title = await generateTitleFromUserMessage({
-      message: createdMessage as any,
-    });
-    await saveChat({ id: threadId, userId: userId, title });
-    await saveChatId(threadId);
-  }
 
   return AssistantResponse(
     { threadId, messageId: createdMessage.id },
