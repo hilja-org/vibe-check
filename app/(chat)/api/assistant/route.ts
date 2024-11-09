@@ -1,6 +1,7 @@
 import { AssistantResponse } from 'ai';
 import { cookies } from 'next/headers';
 import { default as OpenAI } from 'openai';
+import { MessageCreateParams } from 'openai/resources/beta/threads/messages.mjs';
 
 import { saveChat, saveMessages } from '@/db/queries';
 import { generateUUID, sanitizeResponseMessages } from '@/lib/utils';
@@ -9,7 +10,6 @@ import {
   generateTitleFromUserMessage,
   saveChatId,
 } from '../../../chat/actions';
-import { MessageCreateParams } from 'openai/resources/beta/threads/messages.mjs';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
