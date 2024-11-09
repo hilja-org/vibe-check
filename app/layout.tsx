@@ -8,8 +8,9 @@ import '@fontsource-variable/red-hat-display';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chat.vercel.ai'),
-  title: 'Next.js Chatbot Template',
-  description: 'Next.js chatbot template using the AI SDK.',
+  title: 'Vibe Check',
+  description:
+    'No more career blind dates - meet jobs that `get` you from day one.',
 };
 
 export const viewport = {
