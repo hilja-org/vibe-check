@@ -33,6 +33,18 @@ export async function POST(req: Request) {
     ? input.threadId
     : (await openai.beta.threads.create({})).id;
 
+  if (!input.threadId) {
+    const cookieStore = await cookies();
+    const userId = cookieStore.get('user')?.value ?? '';
+
+    await saveChat({
+      id: threadId,
+      userId: userId,
+      title: input.message ?? '',
+    });
+    await saveChatId(threadId);
+  }
+
   let createdMessage: any = {};
 
   if (input.message) {
@@ -67,18 +79,6 @@ export async function POST(req: Request) {
         },
       ],
     });
-  }
-
-  if (!input.threadId) {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get('user')?.value ?? '';
-
-    await saveChat({
-      id: threadId,
-      userId: userId,
-      title: input.message ?? '',
-    });
-    await saveChatId(threadId);
   }
 
   return AssistantResponse(
