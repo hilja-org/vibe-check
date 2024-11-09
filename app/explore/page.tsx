@@ -1,59 +1,27 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import { cookies } from 'next/headers';
 
-import BottomNav from '@/components/custom/BottomNav';
-import CompanyCard from '@/components/custom/CompayCard';
-import { Button } from '@/components/ui/button';
+import Explore from '@/components/custom/Explore';
 import { getCompanyData } from '@/data/companyData';
+import { getChatById } from '@/db/queries';
 
 export default async function Page() {
   const companies = getCompanyData();
   const featuredCompanies = companies.slice(0, 2);
 
+  const cookieStore = await cookies();
+  const chatId = cookieStore.get('chat-id')?.value;
+  const userId = cookieStore.get('user')?.value;
+
+  const chat = !!chatId && !!userId ? await getChatById({ id: chatId }) : null;
+  const isExistingUser = !!chat && chat.userId === userId;
+
+  const userName = 'Matti';
+
   return (
-    <div className="min-h-screen">
-      <div className="bg-gray-800 py-14 px-8 relative z-0">
-        <div className="pr-24">
-          <h2 className="text-white text-xl">Welcome Matti!</h2>
-          <p className="text-white text-xl">Tell us what matters to you!</p>
-        </div>
-        <div className="absolute rocket h-56 top-2 right-2 overflow-hidden z-10" />
-      </div>
-      <div className="half-bg-gray-800 mb-10 px-8">
-        <div className="bg-primary rounded-lg p-4 flex flex-col gap-4">
-          <h3 className="text-white font-bold text-base">
-            Ready to find your perfect fit?
-          </h3>
-          <div className="flex gap-4">
-            <div className="shrink-0">
-              <Image
-                src="/images/aura.png"
-                alt="Aura"
-                width={60}
-                height={60}
-                className="w-14"
-              />
-            </div>
-            <p className="text-white">
-              Create your profile to unlock matches with companies that share
-              your values and support your well-being.
-            </p>
-          </div>
-          <Button asChild variant="secondary" className="w-full">
-            <Link href="/chat">Create your profile</Link>
-          </Button>
-        </div>
-      </div>
-      <div className="px-8 pb-4">
-        <h2 className="pb-2">Companies</h2>
-        <p className="pb-4">Create a profile and find your match</p>
-        <div className="flex flex-col gap-4">
-          {featuredCompanies.map((company) => (
-            <CompanyCard company={company} key={company.businessId} />
-          ))}
-        </div>
-      </div>
-      <BottomNav />
-    </div>
+    <Explore
+      isExistingUser={isExistingUser}
+      userName={userName}
+      companies={featuredCompanies}
+    />
   );
 }
