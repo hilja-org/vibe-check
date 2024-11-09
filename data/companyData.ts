@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import * as data from './data.json';
+import { User } from '@/db/schema';
 
 const Source = z.object({
   url: z.string(),
@@ -13,6 +14,8 @@ const Rating = z.object({
   score: z.number(),
   sources: z.array(Source),
 });
+
+export type Rating = z.infer<typeof Rating>;
 
 export const Company = z.object({
   name: z.string(),
@@ -36,32 +39,39 @@ export const getCompanyData = () => {
 type RatingCategory = {
   id: number;
   title: string;
+  userKey: keyof User;
 };
 
 export const ratingCategories: RatingCategory[] = [
   {
     id: 1,
     title: 'Basic needs and security',
+    userKey: 'tmt_1',
   },
   {
     id: 2,
     title: 'Recognition and career success',
+    userKey: 'tmt_2',
   },
   {
     id: 3,
     title: 'Authenticity and agency',
+    userKey: 'tmt_3',
   },
   {
     id: 4,
     title: 'Self-development and competence',
+    userKey: 'tmt_4',
   },
   {
     id: 5,
     title: 'Belongingness and contribution within the work community',
+    userKey: 'tmt_5',
   },
   {
     id: 6,
     title: 'Broader and everyday good deeds through work',
+    userKey: 'tmt_6',
   },
 ];
 
