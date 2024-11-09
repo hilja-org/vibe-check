@@ -26,8 +26,6 @@ export type Company = z.infer<typeof Company>;
 const CompanyData = z.object({ companies: z.array(Company) });
 
 export const getCompanyData = () => {
-  console.log(data);
-
   return CompanyData.parse(data).companies;
 };
 
