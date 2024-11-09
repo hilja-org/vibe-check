@@ -7,7 +7,7 @@ import LandingImg from '../public/images/landing.png';
 
 export default async function Page() {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="min-h-screen">
       <div className="landing mt-4">
         <Image
           src={LandingImg}

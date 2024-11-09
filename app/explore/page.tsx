@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import BottomNav from '@/components/custom/BottomNav';
 import CompanyCard from '@/components/custom/CompayCard';
 import { Button } from '@/components/ui/button';
 import { getCompanyData } from '@/data/companyData';
@@ -10,7 +11,7 @@ export default async function Page() {
   const featuredCompanies = companies.slice(0, 2);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="bg-gray-800 py-14 px-8 relative z-0">
         <div className="pr-24">
           <h2 className="text-white text-xl">Welcome Matti!</h2>
@@ -52,6 +53,7 @@ export default async function Page() {
           ))}
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 }
