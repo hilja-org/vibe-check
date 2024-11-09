@@ -9,7 +9,7 @@ const companies = require('./config.json');
 config(); // Load environment variables from .env.local file
 
 const client = new OpenAIClient({
-  apiKey: process.env.OPENAI_API_KEYg,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 async function getCompanyReport(businessId: string, name: string) {
