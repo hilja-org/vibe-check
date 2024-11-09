@@ -23,11 +23,13 @@ export const Company = z.object({
 
 export type Company = z.infer<typeof Company>;
 
+export type CompanyWithMatch = Company & {
+  userMatch: number | undefined;
+};
+
 const CompanyData = z.object({ companies: z.array(Company) });
 
 export const getCompanyData = () => {
-  console.log(data);
-
   return CompanyData.parse(data).companies;
 };
 
@@ -39,42 +41,26 @@ type RatingCategory = {
 export const ratingCategories: RatingCategory[] = [
   {
     id: 1,
-    title: 'Workplace Atmosphere and Community',
+    title: 'Basic needs and security',
   },
   {
     id: 2,
-    title: 'Job Content and Challenges',
+    title: 'Recognition and career success',
   },
   {
     id: 3,
-    title: 'Leadership and Management',
+    title: 'Authenticity and agency',
   },
   {
     id: 4,
-    title: 'Work Facilities and Tools',
+    title: 'Self-development and competence',
   },
   {
     id: 5,
-    title: 'Compensation and Benefits',
+    title: 'Belongingness and contribution within the work community',
   },
   {
     id: 6,
-    title: 'Working Hours and Flexibility',
-  },
-  {
-    id: 7,
-    title: 'Training and Development Opportunities',
-  },
-  {
-    id: 8,
-    title: 'Occupational Health and Well-being',
-  },
-  {
-    id: 9,
-    title: 'Job Stability and Career Advancement',
-  },
-  {
-    id: 10,
-    title: 'Company Reputation and Values',
+    title: 'Broader and everyday good deeds through work',
   },
 ];

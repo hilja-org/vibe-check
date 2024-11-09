@@ -5,24 +5,33 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import BottomNav from '@/components/custom/BottomNav';
+import Chip from '@/components/custom/Chip';
 import CompanyCard from '@/components/custom/CompayCard';
 import { Button } from '@/components/ui/button';
-import { Company } from '@/data/companyData';
+import { Input } from '@/components/ui/input';
+import { CompanyWithMatch } from '@/data/companyData';
 
 export default function Explore({
   companies,
   isExistingUser,
   userName,
 }: {
-  companies: Company[];
+  companies: CompanyWithMatch[];
   isExistingUser: boolean;
   userName: string;
 }) {
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<number>(0);
+
+  const filteredCompanies = isExistingUser
+    ? companies.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : companies.slice(0, 2);
 
   return (
-    <div className="min-h-screen">
-      <div className="bg-gray-800 py-14 px-8 relative z-0">
+    <div className="min-h-screen z-0">
+      <div className="bg-gray-800 py-14 px-8 relative">
         <div className="pr-24">
           <h2 className="text-white text-xl">
             {isExistingUser
@@ -38,7 +47,12 @@ export default function Explore({
         <div className="absolute rocket h-56 top-2 right-2 overflow-hidden z-10" />
       </div>
       {isExistingUser ? (
-        <ExistingUserHeader search={search} setSearch={setSearch} />
+        <ExistingUserHeader
+          search={search}
+          setSearch={setSearch}
+          filter={filter}
+          setFilter={setFilter}
+        />
       ) : (
         <NewUserHeader />
       )}
@@ -48,7 +62,7 @@ export default function Explore({
         </h2>
         <p className="pb-4">Create a profile and find your match</p>
         <div className="flex flex-col gap-4">
-          {companies.map((company) => (
+          {filteredCompanies.map((company) => (
             <CompanyCard company={company} key={company.businessId} />
           ))}
         </div>
@@ -61,17 +75,56 @@ export default function Explore({
 function ExistingUserHeader({
   search,
   setSearch,
+  filter,
+  setFilter,
 }: {
   search: string;
   setSearch: (search: string) => void;
+  filter: number | undefined;
+  setFilter: (filter: number) => void;
 }) {
+  const filters = ['Featured', 'Near me', 'Industry', 'Remote work', 'Culture'];
+
   return (
-    <div className="bg-gray-800 mb-10 px-8">
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+    <div className="bg-gray-800 pb-6 mb-4">
+      <div className="flex flex-col z-20 relative gap-4">
+        <div className="px-8">
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search for companies"
+            className="rounded-full"
+          />
+        </div>
+        <div className="flex gap-1 overflow-y-scroll pl-8 pr-2">
+          {filters.map((f, i) => (
+            <HeaderFilterChip
+              key={i}
+              label={f}
+              active={filter === i}
+              onClick={() => setFilter(i)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeaderFilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const variant = active ? 'active' : 'inactive';
+
+  return (
+    <div className="shrink-0 cursor-pointer" onClick={onClick}>
+      <Chip variant={variant}>{label}</Chip>
     </div>
   );
 }
