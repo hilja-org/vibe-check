@@ -23,7 +23,7 @@ export function DrawerButton() {
       <DrawerTrigger asChild>
         <div className="flex justify-end px-4">
           <Button variant="secondary" className="text-primary font-bold w-32">
-            See results
+            View my matches
           </Button>
         </div>
       </DrawerTrigger>
