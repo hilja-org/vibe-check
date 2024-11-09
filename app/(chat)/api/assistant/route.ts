@@ -33,48 +33,53 @@ export async function POST(req: Request) {
     ? input.threadId
     : (await openai.beta.threads.create({})).id;
 
-  const userMessage: MessageCreateParams = {
-    role: 'user',
-    content: [{ type: 'text', text: input.message }],
-  };
+  let createdMessage: any = {};
 
-  if (input.data?.attachments && typeof userMessage.content !== 'string') {
-    userMessage.content.push({
-      type: 'image_url',
-      image_url: {
-        url: input.data.attachments,
-      },
+  if (input.message) {
+    const userMessage: MessageCreateParams = {
+      role: 'user',
+      content: [{ type: 'text', text: input.message }],
+    };
+
+    if (input.data?.attachments && typeof userMessage.content !== 'string') {
+      userMessage.content.push({
+        type: 'image_url',
+        image_url: {
+          url: input.data.attachments,
+        },
+      });
+    }
+
+    // Add a message to the thread
+    createdMessage = await openai.beta.threads.messages.create(
+      threadId,
+      userMessage
+    );
+
+    await saveMessages({
+      messages: [
+        {
+          role: 'user',
+          content: input.message,
+          id: generateUUID(),
+          createdAt: new Date(),
+          chatId: threadId,
+        },
+      ],
     });
   }
-
-  // Add a message to the thread
-  const createdMessage = await openai.beta.threads.messages.create(
-    threadId,
-    userMessage
-  );
 
   if (!input.threadId) {
     const cookieStore = await cookies();
     const userId = cookieStore.get('user')?.value ?? '';
 
-    const title = await generateTitleFromUserMessage({
-      message: createdMessage as any,
+    await saveChat({
+      id: threadId,
+      userId: userId,
+      title: input.message ?? '',
     });
-    await saveChat({ id: threadId, userId: userId, title });
     await saveChatId(threadId);
   }
-
-  await saveMessages({
-    messages: [
-      {
-        role: 'user',
-        content: input.message,
-        id: generateUUID(),
-        createdAt: new Date(),
-        chatId: threadId,
-      },
-    ],
-  });
 
   return AssistantResponse(
     { threadId, messageId: createdMessage.id },
@@ -125,6 +130,7 @@ export async function POST(req: Request) {
           const messages = await openai.beta.threads.messages.list(threadId);
           const lastMessage = messages.data
             .filter((role) => role.role === 'assistant')
+            .sort((a, b) => a.created_at - b.created_at)
             .pop();
 
           const responseMessagesWithoutIncompleteToolCalls =
