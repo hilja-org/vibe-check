@@ -125,7 +125,7 @@ export const PreviewMessage = ({
             </div>
           )}
 
-          {chatId && (
+          {/* {chatId && (
             <MessageActions
               key={`action-${message.id}`}
               chatId={chatId}
@@ -133,7 +133,7 @@ export const PreviewMessage = ({
               vote={vote}
               isLoading={isLoading}
             />
-          )}
+          )} */}
         </div>
       </div>
     </motion.div>

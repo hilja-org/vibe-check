@@ -3,7 +3,7 @@
 import { Attachment, Message } from 'ai';
 import { useAssistant } from 'ai/react';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { useWindowSize } from 'usehooks-ts';
 
@@ -71,6 +71,9 @@ export function Chat({
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <>
       <div className="flex flex-col min-w-0 h-dvh ">
@@ -79,7 +82,13 @@ export function Chat({
           ref={messagesContainerRef}
           className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
         >
-          {allMessages.length === 0 && <Overview />}
+          {allMessages.length === 0 && (
+            <Overview
+              setInput={setInput}
+              textareaRef={textareaRef}
+              fileInputRef={fileInputRef}
+            />
+          )}
 
           {allMessages.map((message, index) => (
             <PreviewMessage
@@ -123,6 +132,8 @@ export function Chat({
             messages={messages}
             setMessages={setMessages}
             append={append}
+            textareaRef={textareaRef}
+            fileInputRef={fileInputRef}
           />
         </form>
       </div>
@@ -144,6 +155,8 @@ export function Chat({
             messages={messages}
             setMessages={setMessages}
             votes={votes}
+            textareaRef={textareaRef}
+            fileInputRef={fileInputRef}
           />
         )}
       </AnimatePresence>
