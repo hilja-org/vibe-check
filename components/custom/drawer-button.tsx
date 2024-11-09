@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import CompanyCard from '@/components/custom/CompayCard';
+import CompanyCard from '@/components/custom/CompanyCard';
 import { Button } from '@/components/ui/button';
 import {
   Drawer,

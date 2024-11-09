@@ -1,9 +1,14 @@
+import Link from 'next/link';
+
 import Chip from '@/components/custom/Chip';
 import { Company } from '@/data/companyData';
 
 export default function CompanyCard({ company }: { company: Company }) {
   return (
-    <div className="bg-white rounded-md p-4 flex gap-2">
+    <Link
+      className="bg-white rounded-md p-4 flex gap-2"
+      href={`/explore/${company.businessId}`}
+    >
       <div className="shrink-0">Logo here</div>
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-bold">{company.name}</h3>
@@ -13,6 +18,6 @@ export default function CompanyCard({ company }: { company: Company }) {
           <Chip variant="negative">Negative trait</Chip>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
