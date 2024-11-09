@@ -1,9 +1,17 @@
 import Link from 'next/link';
 
 import Chip from '@/components/custom/Chip';
-import { Company } from '@/data/companyData';
+import {
+  Company,
+  CompanyWithMatch,
+  getCategoryTitle,
+} from '@/data/companyData';
 
-export default function CompanyCard({ company }: { company: Company }) {
+export default function CompanyCard({
+  company,
+}: {
+  company: CompanyWithMatch;
+}) {
   return (
     <Link
       className="bg-white rounded-md p-4 flex gap-2"

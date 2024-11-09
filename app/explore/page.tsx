@@ -52,9 +52,13 @@ const calculateUserMatch = (
   userScores: UserScores
 ): number => {
   const totalDifference = company.categories.reduce(
-    (prev, curr) => prev + (userScores[curr.categoryId] ?? 0),
+    (prev, curr) =>
+      (prev + Math.abs(curr.score - (userScores[curr.categoryId] ?? 0))) ^ 2,
     0
   );
 
-  return 100 - (totalDifference / (company.categories.length * 100)) * 100;
+  return (
+    100 -
+    ((totalDifference ^ 2) / (company.categories.length * (100 ^ 2))) * 100
+  );
 };

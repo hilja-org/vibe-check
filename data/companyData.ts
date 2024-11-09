@@ -64,3 +64,6 @@ export const ratingCategories: RatingCategory[] = [
     title: 'Broader and everyday good deeds through work',
   },
 ];
+
+export const getCategoryTitle = (categoryId: number): string =>
+  ratingCategories.find((c) => c.id === categoryId)?.title ?? '';
