@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { default as OpenAI } from 'openai';
 import { MessageCreateParams } from 'openai/resources/beta/threads/messages.mjs';
 
-import { saveChat, saveMessages } from '@/db/queries';
+import { saveChat, saveMessages, updateUser } from '@/db/queries';
 import { generateUUID, sanitizeResponseMessages } from '@/lib/utils';
 
 import {
@@ -28,15 +28,15 @@ export async function POST(req: Request) {
     };
   } = await req.json();
 
+  const cookieStore = await cookies();
+  const userId = cookieStore.get('user')?.value ?? '';
+
   // Create a thread if needed
   const threadId = input.threadId
     ? input.threadId
     : (await openai.beta.threads.create({})).id;
 
   if (!input.threadId) {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get('user')?.value ?? '';
-
     await saveChat({
       id: threadId,
       userId: userId,
@@ -107,7 +107,16 @@ export async function POST(req: Request) {
               const parameters = JSON.parse(toolCall.function.arguments);
 
               switch (toolCall.function.name) {
-                // configure your tool calls here
+                case 'store_tmt_results':
+                  updateUser(userId, parameters);
+                  console.log({ parameters });
+                  return {
+                    ...toolCall,
+                    output: {
+                      type: 'text',
+                      text: 'Stored TMT results',
+                    },
+                  };
 
                 default:
                   throw new Error(

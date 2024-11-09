@@ -3,18 +3,15 @@
 import { Attachment, Message } from 'ai';
 import { useAssistant } from 'ai/react';
 import { AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import { Fragment, useRef, useState } from 'react';
 import { useWindowSize } from 'usehooks-ts';
 
 import { ChatHeader } from '@/components/custom/chat-header';
 import { PreviewMessage, ThinkingMessage } from '@/components/custom/message';
 import { useScrollToBottom } from '@/components/custom/use-scroll-to-bottom';
-import { Vote } from '@/db/schema';
-import { fetcher } from '@/lib/utils';
 
 import { Block, UIBlock } from './block';
-import { BlockStreamHandler } from './block-stream-handler';
+import { DrawerButton } from './drawer-button';
 import { MultimodalInput } from './multimodal-input';
 import { Overview } from './overview';
 
@@ -44,6 +41,11 @@ export function Chat({
 
   const allMessages = [...initialMessages, ...messages];
 
+  if (allMessages.length === 0) {
+    append({ role: 'user', content: '' });
+    console.log('submit');
+  }
+
   const { width: windowWidth = 1920, height: windowHeight = 1080 } =
     useWindowSize();
 
@@ -60,11 +62,6 @@ export function Chat({
       height: 50,
     },
   });
-
-  const { data: votes } = useSWR<Array<Vote>>(
-    `/api/vote?chatId=${threadId}`,
-    fetcher
-  );
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
@@ -91,21 +88,21 @@ export function Chat({
           )}
 
           {allMessages.map((message, index) => (
-            <PreviewMessage
-              key={message.id}
-              chatId={threadId ?? id}
-              message={message}
-              block={block}
-              setBlock={setBlock}
-              isLoading={
-                status === 'in_progress' && allMessages.length - 1 === index
-              }
-              vote={
-                votes
-                  ? votes.find((vote) => vote.messageId === message.id)
-                  : undefined
-              }
-            />
+            <Fragment key={message.id + '-container'}>
+              <PreviewMessage
+                key={message.id}
+                chatId={threadId ?? id}
+                message={message}
+                block={block}
+                setBlock={setBlock}
+                isLoading={
+                  status === 'in_progress' && allMessages.length - 1 === index
+                }
+              />
+              {index % 5 === 4 ? (
+                <DrawerButton key={message.id + '-drawer'} />
+              ) : null}
+            </Fragment>
           ))}
 
           {status === 'in_progress' &&
@@ -154,7 +151,6 @@ export function Chat({
             setBlock={setBlock}
             messages={messages}
             setMessages={setMessages}
-            votes={votes}
             textareaRef={textareaRef}
             fileInputRef={fileInputRef}
           />

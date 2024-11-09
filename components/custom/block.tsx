@@ -60,7 +60,6 @@ export function Block({
   setBlock,
   messages,
   setMessages,
-  votes,
   textareaRef,
   fileInputRef,
 }: {
@@ -75,7 +74,6 @@ export function Block({
   setBlock: Dispatch<SetStateAction<UIBlock>>;
   messages: Array<Message>;
   setMessages: Dispatch<SetStateAction<Array<Message>>>;
-  votes: Array<Vote> | undefined;
   append: (
     message: Message | CreateMessage,
     requestOptions?: {
@@ -303,11 +301,6 @@ export function Block({
                   block={block}
                   setBlock={setBlock}
                   isLoading={isLoading && index === messages.length - 1}
-                  vote={
-                    votes
-                      ? votes.find((vote) => vote.messageId === message.id)
-                      : undefined
-                  }
                 />
               ))}
 

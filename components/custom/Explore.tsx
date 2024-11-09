@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import BottomNav from '@/components/custom/BottomNav';
 import Chip from '@/components/custom/Chip';
-import CompanyCard from '@/components/custom/CompayCard';
+import CompanyCard from '@/components/custom/CompanyCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CompanyWithMatch } from '@/data/companyData';

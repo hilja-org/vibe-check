@@ -5,7 +5,6 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 
-import { Vote } from '@/db/schema';
 
 import { UIBlock } from './block';
 import { DocumentToolCall, DocumentToolResult } from './document';
@@ -20,14 +19,12 @@ export const PreviewMessage = ({
   message,
   block,
   setBlock,
-  vote,
   isLoading,
 }: {
   chatId: string;
   message: Message;
   block: UIBlock;
   setBlock: Dispatch<SetStateAction<UIBlock>>;
-  vote: Vote | undefined;
   isLoading: boolean;
 }) => {
   return (
@@ -124,16 +121,6 @@ export const PreviewMessage = ({
               ))}
             </div>
           )}
-
-          {/* {chatId && (
-            <MessageActions
-              key={`action-${message.id}`}
-              chatId={chatId}
-              message={message}
-              vote={vote}
-              isLoading={isLoading}
-            />
-          )} */}
         </div>
       </div>
     </motion.div>

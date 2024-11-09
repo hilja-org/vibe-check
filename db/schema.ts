@@ -13,6 +13,12 @@ import {
 
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
+  tmt_1: text('tmt_1'),
+  tmt_2: text('tmt_2'),
+  tmt_3: text('tmt_3'),
+  tmt_4: text('tmt_4'),
+  tmt_5: text('tmt_5'),
+  tmt_6: text('tmt_6'),
 });
 
 export type User = InferSelectModel<typeof user>;
@@ -29,8 +35,7 @@ export const chat = pgTable('Chat', {
 export type Chat = InferSelectModel<typeof chat>;
 
 export const message = pgTable('Message', {
-  id: text('id').primaryKey().notNull()
-  ,
+  id: text('id').primaryKey().notNull(),
   chatId: text('chatId')
     .notNull()
     .references(() => chat.id),
