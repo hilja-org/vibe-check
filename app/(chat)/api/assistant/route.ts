@@ -108,11 +108,13 @@ export async function POST(req: Request) {
 
               switch (toolCall.function.name) {
                 case 'store_tmt_results':
+                  updateUser(userId, parameters);
+                  console.log({ parameters });
                   return {
                     ...toolCall,
                     output: {
                       type: 'text',
-                      text: updateUser(userId, parameters),
+                      text: 'Stored TMT results',
                     },
                   };
 
