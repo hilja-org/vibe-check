@@ -40,7 +40,7 @@ export default async function Page() {
             </p>
           </div>
           <Button asChild variant="secondary" className="w-full">
-            <Link href="/profile">Create your profile</Link>
+            <Link href="/chat">Create your profile</Link>
           </Button>
         </div>
       </div>
