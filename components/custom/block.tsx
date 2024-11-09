@@ -61,6 +61,8 @@ export function Block({
   messages,
   setMessages,
   votes,
+  textareaRef,
+  fileInputRef,
 }: {
   chatId: string;
   input: string;
@@ -84,6 +86,8 @@ export function Block({
     event?: FormEvent<HTMLFormElement> | undefined,
     requestOptions?: { data?: Record<string, string> | undefined } | undefined
   ) => Promise<void>;
+  textareaRef: React.RefObject<HTMLTextAreaElement>;
+  fileInputRef: React.RefObject<HTMLInputElement>;
 }) {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
@@ -327,6 +331,8 @@ export function Block({
                 append={append}
                 className="bg-background dark:bg-muted"
                 setMessages={setMessages}
+                textareaRef={textareaRef}
+                fileInputRef={fileInputRef}
               />
             </form>
           </div>

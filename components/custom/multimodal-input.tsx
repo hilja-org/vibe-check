@@ -25,14 +25,14 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'What is the weather',
-    label: 'in San Francisco?',
-    action: 'What is the weather in San Francisco?',
+    title: 'I prefer working remotely',
+    label: 'max 2 days in office',
+    action: 'I prefer working remotely max 2 days in office',
   },
   {
-    title: 'Help me draft an essay',
-    label: 'about Silicon Valley',
-    action: 'Help me draft a short essay about Silicon Valley',
+    title: 'I prefer not doing',
+    label: 'any overtime',
+    action: 'I hate doing overtime any overtime',
   },
 ];
 
@@ -49,6 +49,8 @@ export function MultimodalInput({
   append,
   handleSubmit,
   className,
+  textareaRef,
+  fileInputRef,
 }: {
   chatId: string;
   input: string;
@@ -70,8 +72,9 @@ export function MultimodalInput({
     requestOptions?: { data?: Record<string, string> | undefined } | undefined
   ) => Promise<void>;
   className?: string;
+  textareaRef: React.RefObject<HTMLTextAreaElement>;
+  fileInputRef: React.RefObject<HTMLInputElement>;
 }) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -113,7 +116,6 @@ export function MultimodalInput({
     adjustHeight();
   };
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadQueue, setUploadQueue] = useState<Array<string>>([]);
 
   const submitForm = useCallback(() => {
@@ -192,32 +194,33 @@ export function MultimodalInput({
         attachments.length === 0 &&
         uploadQueue.length === 0 && (
           <div className="grid sm:grid-cols-2 gap-2 w-full">
-            {suggestedActions.map((suggestedAction, index) => (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.05 * index }}
-                key={index}
-                className={index > 1 ? 'hidden sm:block' : 'block'}
-              >
-                <Button
-                  variant="ghost"
-                  onClick={async () => {
-                    append({
-                      role: 'user',
-                      content: suggestedAction.action,
-                    });
-                  }}
-                  className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
+            {Boolean(messages.length) &&
+              suggestedActions.map((suggestedAction, index) => (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: 0.05 * index }}
+                  key={index}
+                  className={index > 1 ? 'hidden sm:block' : 'block'}
                 >
-                  <span className="font-medium">{suggestedAction.title}</span>
-                  <span className="text-muted-foreground">
-                    {suggestedAction.label}
-                  </span>
-                </Button>
-              </motion.div>
-            ))}
+                  <Button
+                    variant="ghost"
+                    onClick={async () => {
+                      append({
+                        role: 'user',
+                        content: suggestedAction.action,
+                      });
+                    }}
+                    className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
+                  >
+                    <span className="font-medium">{suggestedAction.title}</span>
+                    <span className="text-muted-foreground">
+                      {suggestedAction.label}
+                    </span>
+                  </Button>
+                </motion.div>
+              ))}
           </div>
         )}
 
