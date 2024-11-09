@@ -30,6 +30,21 @@ export async function getUser(id: string): Promise<Array<User>> {
   }
 }
 
+export async function updateUser(
+  userId: User['id'],
+  { tmt_1, tmt_2, tmt_3, tmt_4, tmt_5, tmt_6 }: User
+) {
+  try {
+    return db
+      .update(user)
+      .set({ tmt_1, tmt_2, tmt_3, tmt_4, tmt_5, tmt_6 })
+      .where(eq(user.id, userId));
+  } catch (error) {
+    console.error('Failed to update user in database');
+    throw error;
+  }
+}
+
 export async function createUser() {
   try {
     return db.insert(user).values({}).returning();
