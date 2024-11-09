@@ -13,7 +13,7 @@ export default function Chip({
 
   return (
     <div
-      className={`px-3 py-1 rounded-full border text-sm text-black text-center ${variantClassName}`}
+      className={`px-3 py-1 rounded-full border text-sm text-black text-center flex items-center ${variantClassName}`}
     >
       {children}
     </div>
