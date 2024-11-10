@@ -82,11 +82,19 @@ export function AreaChart({
               >
                 <tspan
                   x={x}
+                  dy={'0rem'}
+                  fontSize={12}
+                  className="fill-black max-w-6"
+                >
+                  {data.category.split('and')[0]}
+                </tspan>
+                <tspan
+                  x={x}
                   dy={'1rem'}
                   fontSize={12}
                   className="fill-black max-w-6"
                 >
-                  {data.category}
+                  {'and' + data.category.split('and')[1]}
                 </tspan>
               </text>
             );
