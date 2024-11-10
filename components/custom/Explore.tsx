@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CompanyWithMatch } from '@/data/companyData';
 
+const filters = ['Featured', 'Near me', 'Industry', 'Remote work', 'Culture'];
+
 export default function Explore({
   companies,
   isExistingUser,
@@ -24,10 +26,15 @@ export default function Explore({
   const [filter, setFilter] = useState<number>(0);
 
   const filteredCompanies = isExistingUser
-    ? companies.filter((c) => {
-        //const searchMatches = search
+    ? companies.filter((c, i) => {
+        const searchMatches =
+          search === '' || c.name.toLowerCase().includes(search.toLowerCase());
 
-        return c.name.toLowerCase().includes(search.toLowerCase());
+        const filterMatches = filter === 0 || i % filters.length === filter;
+
+        console.log(i, filter, i % filters.length, filter);
+
+        return searchMatches && filterMatches;
       })
     : companies.slice(0, 2);
 
@@ -85,8 +92,6 @@ function ExistingUserHeader({
   filter: number | undefined;
   setFilter: (filter: number) => void;
 }) {
-  const filters = ['Featured', 'Near me', 'Industry', 'Remote work', 'Culture'];
-
   return (
     <div className="bg-gray-800 pb-6 mb-4">
       <div className="flex flex-col z-20 relative gap-4">
