@@ -67,7 +67,6 @@ export const Overview = ({
           {introMessages.map((message, index) => (
             <PreviewMessage
               key={index}
-              vote={undefined}
               isLoading={false}
               block={block}
               setBlock={setBlock}
