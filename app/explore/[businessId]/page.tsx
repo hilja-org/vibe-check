@@ -1,10 +1,11 @@
 import { getCompanyData } from '@/data/companyData';
 
 export default async function Page({
-  params: { businessId },
+  params,
 }: {
-  params: { businessId: string };
+  params: Promise<{ businessId: string }>;
 }) {
+  const businessId = (await params).businessId;
   const companies = getCompanyData();
   const company = companies.find(
     (company) => company.businessId === businessId
