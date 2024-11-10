@@ -276,7 +276,7 @@ export function MultimodalInput({
             event.preventDefault();
 
             if (isLoading) {
-              toast.error('Please wait for the model to finish its response!');
+              toast.error('Please wait for Aura to finish their response!');
             } else {
               submitForm();
             }
