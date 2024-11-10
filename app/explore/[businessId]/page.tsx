@@ -7,7 +7,7 @@ import { ChatHeader } from '@/components/custom/chat-header';
 import CompanyMatch from '@/components/custom/CompanyMatch';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { getCompanyData } from '@/data/companyData';
+import { generateCompaniesWithMatch, getCompanyData } from '@/data/companyData';
 import { getUser } from '@/db/queries';
 
 export default async function Page({
@@ -15,16 +15,20 @@ export default async function Page({
 }: {
   params: Promise<{ businessId: string }>;
 }) {
-  const businessId = (await params).businessId;
-  const companies = getCompanyData();
-  const company = companies.find(
-    (company) => company.businessId === businessId
-  );
-
   const cookieStore = await cookies();
   const userId = cookieStore.get('user')?.value ?? '';
 
   const user = await getUser(userId);
+
+  const businessId = (await params).businessId;
+  const companies = getCompanyData();
+  const company = generateCompaniesWithMatch(
+    [
+      companies.find((company) => company.businessId === businessId) ??
+        companies[0],
+    ],
+    user
+  )[0];
 
   if (!company) {
     return notFound();
@@ -48,7 +52,10 @@ export default async function Page({
         />
         <h1 className="text-3xl font-bold">{company.name}</h1>
         <div className="flex flex-col gap-1">
-          <CompanyMatch match={90} className="size-24 text-2xl" />
+          <CompanyMatch
+            match={company.userMatch ?? 90}
+            className="size-24 text-2xl"
+          />
           <div className="text-center">match rate</div>
         </div>
       </div>
