@@ -18,7 +18,6 @@ import { User } from '@/db/schema';
 export function DrawerButton({ user }: { user: User }) {
   const companies = getCompanyData();
 
-  // TODO Get user scores
   const companiesWithMatch = generateCompaniesWithMatch(companies, user);
 
   const featuredCompanies = companiesWithMatch.slice(0, 2);

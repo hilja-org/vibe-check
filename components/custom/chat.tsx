@@ -95,7 +95,7 @@ export function Chat({
                   status === 'in_progress' && allMessages.length - 1 === index
                 }
               />
-              {index % 5 === 4 ? (
+              {index % 5 === 4 && message.role === 'assistant' ? (
                 <DrawerButton key={message.id + '-drawer'} user={user} />
               ) : null}
             </Fragment>

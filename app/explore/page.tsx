@@ -18,7 +18,6 @@ export default async function Page() {
 
   const userName = 'Matti';
 
-  // TODO Get user scores
   const companiesWithMatch = generateCompaniesWithMatch(companies, user);
 
   return (
