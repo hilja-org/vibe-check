@@ -32,11 +32,10 @@ export async function POST(req: Request) {
   const userId = cookieStore.get('user')?.value ?? '';
 
   // Create a thread if needed
-  const threadId = input.threadId
-    ? input.threadId
-    : (await openai.beta.threads.create({})).id;
+  const chatId = cookieStore.get('chat-id')?.value
+  const threadId = chatId ?? (await openai.beta.threads.create({})).id;
 
-  if (!input.threadId) {
+  if (!chatId) {
     await saveChat({
       id: threadId,
       userId: userId,
