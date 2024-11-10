@@ -15,7 +15,13 @@ export function ChatHeader({
         <ChevronLeft className={switchColors ? 'text-white' : ''} />
       </Link>
       {showAvatar && (
-        <Image src="/images/aura.png" alt="Aura" height={40} width={40} />
+        <Image
+          src="/images/aura.png"
+          alt="Aura"
+          height={40}
+          width={40}
+          priority={true}
+        />
       )}
     </header>
   );

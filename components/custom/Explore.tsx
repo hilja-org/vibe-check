@@ -145,6 +145,7 @@ function NewUserHeader() {
           <div className="shrink-0">
             <Image
               src="/images/aura.png"
+              priority={true}
               alt="Aura"
               width={60}
               height={60}
