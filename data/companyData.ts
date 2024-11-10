@@ -65,12 +65,12 @@ export const ratingCategories: RatingCategory[] = [
   },
   {
     id: 5,
-    title: 'Belongingness and contribution within the work community',
+    title: 'Belongingness and contribution',
     userKey: 'tmt_5',
   },
   {
     id: 6,
-    title: 'Broader and everyday good deeds through work',
+    title: 'Broader and everyday good deeds',
     userKey: 'tmt_6',
   },
 ];
@@ -82,7 +82,6 @@ export const generateCompaniesWithMatch = (
   companies: Company[],
   userScores: User | null
 ): CompanyWithMatch[] => {
-  console.log({ companies, userScores });
   return companies
     .map((company) => ({
       ...company,
