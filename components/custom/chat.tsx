@@ -9,12 +9,12 @@ import { useWindowSize } from 'usehooks-ts';
 import { ChatHeader } from '@/components/custom/chat-header';
 import { PreviewMessage, ThinkingMessage } from '@/components/custom/message';
 import { useScrollToBottom } from '@/components/custom/use-scroll-to-bottom';
+import { User } from '@/db/schema';
 
 import { Block, UIBlock } from './block';
 import { DrawerButton } from './drawer-button';
 import { MultimodalInput } from './multimodal-input';
 import { Overview } from './overview';
-import { User } from '@/db/schema';
 
 export function Chat({
   id,
