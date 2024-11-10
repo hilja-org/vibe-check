@@ -14,15 +14,16 @@ import { Block, UIBlock } from './block';
 import { DrawerButton } from './drawer-button';
 import { MultimodalInput } from './multimodal-input';
 import { Overview } from './overview';
+import { User } from '@/db/schema';
 
 export function Chat({
   id,
   initialMessages,
-  selectedModelId,
+  user,
 }: {
   id: string;
   initialMessages: Array<Message>;
-  selectedModelId: string;
+  user: User;
 }) {
   const {
     messages,
@@ -100,7 +101,7 @@ export function Chat({
                 }
               />
               {index % 5 === 4 ? (
-                <DrawerButton key={message.id + '-drawer'} />
+                <DrawerButton key={message.id + '-drawer'} user={user} />
               ) : null}
             </Fragment>
           ))}

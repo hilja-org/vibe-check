@@ -13,19 +13,13 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { generateCompaniesWithMatch, getCompanyData } from '@/data/companyData';
+import { User } from '@/db/schema';
 
-export function DrawerButton() {
+export function DrawerButton({ user }: { user: User }) {
   const companies = getCompanyData();
 
   // TODO Get user scores
-  const companiesWithMatch = generateCompaniesWithMatch(companies, {
-    1: 90,
-    2: 85,
-    3: 80,
-    4: 85,
-    5: 90,
-    6: 80,
-  });
+  const companiesWithMatch = generateCompaniesWithMatch(companies, user);
 
   const featuredCompanies = companiesWithMatch.slice(0, 2);
 

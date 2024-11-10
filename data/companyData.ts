@@ -78,12 +78,11 @@ export const ratingCategories: RatingCategory[] = [
 export const getCategoryTitle = (categoryId: number): string =>
   ratingCategories.find((c) => c.id === categoryId)?.title ?? '';
 
-export type UserScores = Record<number, number>;
-
 export const generateCompaniesWithMatch = (
   companies: Company[],
-  userScores: UserScores | null
+  userScores: User | null
 ): CompanyWithMatch[] => {
+  console.log({ companies, userScores });
   return companies
     .map((company) => ({
       ...company,
@@ -94,13 +93,15 @@ export const generateCompaniesWithMatch = (
     .sort((a, b) => (b.userMatch ?? 0) - (a.userMatch ?? 0));
 };
 
-const calculateUserMatch = (
-  company: Company,
-  userScores: UserScores
-): number => {
+const calculateUserMatch = (company: Company, userScores: User): number => {
   const totalDifference = company.categories.reduce(
     (prev, curr) =>
-      (prev + Math.abs(curr.score - (userScores[curr.categoryId] ?? 0))) ^ 2,
+      (prev +
+        Math.abs(
+          curr.score -
+            Number(userScores[('tmt_' + curr.categoryId) as keyof User] ?? 0)
+        )) ^
+      2,
     0
   );
 
