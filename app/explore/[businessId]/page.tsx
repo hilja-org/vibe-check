@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { getCompanyData } from '@/data/companyData';
 import { getUser } from '@/db/queries';
 import { ChatHeader } from '@/components/custom/chat-header';
+import CompanyMatch from '@/components/custom/CompanyMatch';
 
 export default async function Page({
   params,
@@ -46,9 +47,7 @@ export default async function Page({
           className="rounded-full"
         />
         <h1 className="text-3xl font-bold">{company.name}</h1>
-        <div className="shrink-0 size-24  rounded-full bg-[#E2FFF7] grid place-items-center text-white">
-          85%
-        </div>
+        <CompanyMatch match={90} />
         match rate
       </div>
 
@@ -144,7 +143,7 @@ export default async function Page({
             ⭐️ Recognition & Career Success
           </h3>
           <p className="text-sm">
-            Employees report <b>good internal recognition</b>, with
+            Employees report <b>good internal recognition</b>, with{' '}
             <b>opportunities to showcase impact</b>, though customer visibility
             could improve. They score 15% higher than the industry average in
             employee recognition.

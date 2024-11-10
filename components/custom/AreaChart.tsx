@@ -16,8 +16,8 @@ export function AreaChart({
   companyName,
   user,
 }: {
-  companyData: Rating[];
-  companyName: string;
+  companyData?: Rating[];
+  companyName?: string;
   user: User;
 }) {
   console.log({ user });
@@ -33,7 +33,7 @@ export function AreaChart({
   } satisfies ChartConfig;
 
   const chartData = ratingCategories.map((rating) => {
-    const companyRating = companyData.find(
+    const companyRating = companyData?.find(
       (companyRating) => companyRating.categoryId === rating.id
     );
 
