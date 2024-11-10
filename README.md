@@ -1,49 +1,50 @@
-<a href="https://chat.vercel.ai/">
-  <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Next.js AI Chatbot</h1>
+<a href="https://vibecheck.dev/">
+  <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/opengraph-image.png">
+  <h1 align="center">Vibe Check</h1>
 </a>
 
 <p align="center">
-  An Open-Source AI Chatbot Template Built With Next.js and the AI SDK by Vercel.
+  No more career blind dates - meet jobs that 'get' you from day one. Connecting people with workplaces that feel right—where employees thrive, and employers attract lasting talent.
 </p>
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#model-providers"><strong>Model Providers</strong></a> ·
-  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#running-locally"><strong>Running locally</strong></a>
-</p>
-<br/>
+## Pitch
 
-## Features
+[Video](https://youtu.be/vBOXliBXrA8)  
+[Slides](https://docs.google.com/presentation/d/14vsgkPJlyKA06O7OVZztcjsQqkOV9-sm/edit?usp=sharing&ouid=103685890722722422594&rtpof=true&sd=true)
+[Figma](https://www.figma.com/design/Zqq68i345KwB7559B1B2hb/Junction-2024?node-id=21-3501&t=nObsHiWkxFQpBB8D-1)
+[FigJam](https://www.figma.com/board/cfPpfBSSi3Sgui8SmHI5oA/Junction-2024?node-id=150-557&t=Z35z4PcjmYuSREVh-1)
 
-- [Next.js](https://nextjs.org) App Router
-  - Advanced routing for seamless navigation and performance
-  - React Server Components (RSCs) and Server Actions for server-side rendering and increased performance
-- [AI SDK](https://sdk.vercel.ai/docs)
-  - Unified API for generating text, structured objects, and tool calls with LLMs
-  - Hooks for building dynamic chat and generative user interfaces
-  - Supports OpenAI (default), Anthropic, Cohere, and other model providers
-- [shadcn/ui](https://ui.shadcn.com)
-  - Styling with [Tailwind CSS](https://tailwindcss.com)
-  - Component primitives from [Radix UI](https://radix-ui.com) for accessibility and flexibility
-- Data Persistence
-  - [Vercel Postgres powered by Neon](https://vercel.com/storage/postgres) for saving chat history and user data
-  - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
+## Problem it Solves:
 
-## Model Providers
+In today’s fast-paced work environment, there’s often a gap between what employees need for fulfillment and what companies actually offer in terms of culture and values. Statistics reveal that nearly 30% of new hires leave within the first 90 days due to poor cultural fit, while over 70% of employees feel unfulfilled at work. This misalignment isn’t just costly for companies—wasting up to 30% of an employee’s first-year earnings on turnover expenses—it also impacts employee well-being and productivity. Vibe Check addresses this by providing a transparent, data-driven approach to matching candidates with workplaces that truly align with their values and needs, enabling informed choices for both employees and employers.
 
-This template ships with OpenAI `gpt-4o` as the default. However, with the [AI SDK](https://sdk.vercel.ai/docs), you can switch LLM providers to [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://sdk.vercel.ai/providers/ai-sdk-providers) with just a few lines of code.
+## Real-World Impact:
 
-## Deploy Your Own
+Vibe Check has the potential to reshape hiring by making cultural alignment and well-being core priorities. For employees, this means finding workplaces where their values are embraced, their well-being is prioritized, and personal growth is encouraged, leading to greater job satisfaction and less turnover. For employers, it means attracting and retaining people who thrive within their culture, building stronger, more engaged teams. By highlighting alignment in values, work styles, and well-being needs, Vibe Check helps create a workforce that’s not only productive but genuinely connected to their work.
 
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
+## Technologies Used:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20Chatbot&demo-description=An%20Open-Source%20AI%20Chatbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fchat.vercel.ai&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
+- Frontend Development: NextJS and React.js for a smooth, responsive experience.
+- Styling: Tailwind CSS, making the design flexible and user-friendly.
+- AI & Backend Integration: OpenAI Assistants and ChatGPT for AI-driven insights and personalized coaching, guiding users to the right match.
+- Programming: TypeScript, ensuring scalable, efficient code.
+- Design and Creativity Tools: Figma and Canva for UI/UX design, with Capcut for video content.
+- Data Management: Excel for structuring and analyzing data.
+- Deployment & Hosting: Vercel for reliable performance and scalability.
+
+## Future Plans:
+
+Benefits Comparison: Enable candidates to easily compare benefits like mental health support, flexibility, and work-life balance across companies, helping them make decisions that support their well-being.
+Wellness Integration: Partner with wellness providers, giving employers insights into well-being and offering candidates access to wellness resources.
+Employer Engagement Analytics: Provide companies with data on candidate interactions (views, saves, applications) to refine their cultural messaging and enhance candidate attraction.
+
+## Conclusion:
+
+Vibe Check is designed to bridge the gap between workplace reality and employee expectations, fostering a hiring process rooted in values and transparency. With tools like the Vocational Meaning and Fulfillment Survey (VMFS), Vibe Check brings alignment to the forefront, connecting people and workplaces where they can truly thrive.
 
 ## Running locally
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+You will need to use the environment variables [defined in `.env.example`](.env.example) to run Vibe Check. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
 
 > Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various OpenAI and authentication provider accounts.
 
