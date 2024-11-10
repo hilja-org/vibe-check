@@ -27,12 +27,12 @@ export async function getUser(id: string): Promise<User> {
     const foundUser = foundUsers[0];
     return {
       ...foundUser,
-      tmt_1: foundUser.tmt_1 ?? '90',
-      tmt_2: foundUser.tmt_2 ?? '85',
+      tmt_1: foundUser.tmt_1 ?? '73',
+      tmt_2: foundUser.tmt_2 ?? '63',
       tmt_3: foundUser.tmt_3 ?? '80',
-      tmt_4: foundUser.tmt_4 ?? '85',
-      tmt_5: foundUser.tmt_5 ?? '90',
-      tmt_6: foundUser.tmt_6 ?? '80',
+      tmt_4: foundUser.tmt_4 ?? '48',
+      tmt_5: foundUser.tmt_5 ?? '51',
+      tmt_6: foundUser.tmt_6 ?? '53',
     };
   } catch (error) {
     console.error('Failed to get user from database');

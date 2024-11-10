@@ -22,14 +22,16 @@ export function AreaChart({
 }) {
   console.log({ user });
   const chartConfig = {
-    company: {
-      label: companyName,
-      color: 'hsl(var(--chart-1))',
-    },
     user: {
       label: 'You',
       color: 'hsl(var(--chart-2))',
     },
+    ...(companyData && {
+      company: {
+        label: companyName,
+        color: 'hsl(var(--chart-1))',
+      },
+    }),
   } satisfies ChartConfig;
 
   const chartData = ratingCategories.map((rating) => {
@@ -92,11 +94,13 @@ export function AreaChart({
         />
 
         <PolarGrid />
-        <Radar
-          dataKey="company"
-          fill="var(--color-company)"
-          fillOpacity={0.6}
-        />
+        {companyData && (
+          <Radar
+            dataKey="company"
+            fill="var(--color-company)"
+            fillOpacity={0.6}
+          />
+        )}
         <Radar dataKey="user" fill="var(--color-user)" />
       </RadarChart>
     </ChartContainer>
