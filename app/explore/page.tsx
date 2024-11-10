@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 import Explore from '@/components/custom/Explore';
-import { Company, CompanyWithMatch, getCompanyData } from '@/data/companyData';
+import { generateCompaniesWithMatch, getCompanyData } from '@/data/companyData';
 import { getChatById } from '@/db/queries';
 
 export default async function Page() {
@@ -34,31 +34,3 @@ export default async function Page() {
     />
   );
 }
-
-type UserScores = Record<number, number>;
-
-const generateCompaniesWithMatch = (
-  companies: Company[],
-  userScores: UserScores | null
-): CompanyWithMatch[] => {
-  return companies.map((company) => ({
-    ...company,
-    userMatch: userScores ? calculateUserMatch(company, userScores) : undefined,
-  }));
-};
-
-const calculateUserMatch = (
-  company: Company,
-  userScores: UserScores
-): number => {
-  const totalDifference = company.categories.reduce(
-    (prev, curr) =>
-      (prev + Math.abs(curr.score - (userScores[curr.categoryId] ?? 0))) ^ 2,
-    0
-  );
-
-  return (
-    100 -
-    ((totalDifference ^ 2) / (company.categories.length * (100 ^ 2))) * 100
-  );
-};

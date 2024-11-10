@@ -12,11 +12,22 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { getCompanyData } from '@/data/companyData';
+import { generateCompaniesWithMatch, getCompanyData } from '@/data/companyData';
 
 export function DrawerButton() {
   const companies = getCompanyData();
-  const featuredCompanies = companies.slice(0, 2);
+
+  // TODO Get user scores
+  const companiesWithMatch = generateCompaniesWithMatch(companies, {
+    1: 90,
+    2: 85,
+    3: 80,
+    4: 85,
+    5: 90,
+    6: 80,
+  });
+
+  const featuredCompanies = companiesWithMatch.slice(0, 2);
 
   return (
     <Drawer>

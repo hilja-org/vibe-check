@@ -67,3 +67,35 @@ export const ratingCategories: RatingCategory[] = [
 
 export const getCategoryTitle = (categoryId: number): string =>
   ratingCategories.find((c) => c.id === categoryId)?.title ?? '';
+
+export type UserScores = Record<number, number>;
+
+export const generateCompaniesWithMatch = (
+  companies: Company[],
+  userScores: UserScores | null
+): CompanyWithMatch[] => {
+  return companies
+    .map((company) => ({
+      ...company,
+      userMatch: userScores
+        ? calculateUserMatch(company, userScores)
+        : undefined,
+    }))
+    .sort((a, b) => (b.userMatch ?? 0) - (a.userMatch ?? 0));
+};
+
+const calculateUserMatch = (
+  company: Company,
+  userScores: UserScores
+): number => {
+  const totalDifference = company.categories.reduce(
+    (prev, curr) =>
+      (prev + Math.abs(curr.score - (userScores[curr.categoryId] ?? 0))) ^ 2,
+    0
+  );
+
+  return (
+    100 -
+    ((totalDifference ^ 2) / (company.categories.length * (100 ^ 2))) * 100
+  );
+};
