@@ -32,8 +32,6 @@ export default function Explore({
 
         const filterMatches = filter === 0 || i % filters.length === filter;
 
-        console.log(i, filter, i % filters.length, filter);
-
         return searchMatches && filterMatches;
       })
     : companies.slice(0, 2);

@@ -42,11 +42,6 @@ export function Chat({
 
   const allMessages = [...initialMessages, ...messages];
 
-  if (allMessages.length === 0) {
-    append({ role: 'user', content: '' });
-    console.log('submit');
-  }
-
   const { width: windowWidth = 1920, height: windowHeight = 1080 } =
     useWindowSize();
 

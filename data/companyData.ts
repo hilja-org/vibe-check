@@ -82,7 +82,6 @@ export const generateCompaniesWithMatch = (
   companies: Company[],
   userScores: User | null
 ): CompanyWithMatch[] => {
-  console.log({ companies, userScores });
   return companies
     .map((company) => ({
       ...company,

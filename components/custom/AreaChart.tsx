@@ -20,7 +20,6 @@ export function AreaChart({
   companyName?: string;
   user: User;
 }) {
-  console.log({ user });
   const chartConfig = {
     user: {
       label: 'You',
