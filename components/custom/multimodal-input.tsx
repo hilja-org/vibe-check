@@ -77,18 +77,18 @@ export function MultimodalInput({
 }) {
   const { width } = useWindowSize();
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      adjustHeight();
-    }
-  }, []);
-
   const adjustHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 2}px`;
     }
   };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      adjustHeight();
+    }
+  }, [textareaRef]);
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     'input',
@@ -119,7 +119,6 @@ export function MultimodalInput({
   const [uploadQueue, setUploadQueue] = useState<Array<string>>([]);
 
   const submitForm = useCallback(() => {
-    console.log(attachments);
     handleSubmit(undefined, {
       data: {
         attachments: attachments.map((attachment) => attachment.url).join(','),
@@ -132,7 +131,14 @@ export function MultimodalInput({
     if (width && width > 768) {
       textareaRef.current?.focus();
     }
-  }, [handleSubmit, setAttachments, setLocalStorageInput, width]);
+  }, [
+    handleSubmit,
+    attachments,
+    setAttachments,
+    setLocalStorageInput,
+    width,
+    textareaRef,
+  ]);
 
   const uploadFile = async (file: File) => {
     const formData = new FormData();

@@ -1,14 +1,15 @@
-import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { Share2Icon } from 'lucide-react';
+import { cookies } from 'next/headers';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { AreaChart } from '@/components/custom/AreaChart';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { getUser } from '@/db/queries';
 import { ChatHeader } from '@/components/custom/chat-header';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { getUser } from '@/db/queries';
+
 
 export default async function Page() {
   const cookieStore = await cookies();

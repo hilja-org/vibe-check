@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 import { AreaChart } from '@/components/custom/AreaChart';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { getCompanyData } from '@/data/companyData';
-import { getUser } from '@/db/queries';
 import { ChatHeader } from '@/components/custom/chat-header';
 import CompanyMatch from '@/components/custom/CompanyMatch';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { getCompanyData } from '@/data/companyData';
+import { getUser } from '@/db/queries';
 
 export default async function Page({
   params,
@@ -32,7 +32,7 @@ export default async function Page({
 
   return (
     <div
-      className="min-h-screen px-4 flex flex-col gap-4 py-4 text-black"
+      className="min-h-screen p-4 flex flex-col gap-4 text-black"
       style={{
         background: 'linear-gradient(180deg, #212226 30%, transparent 30%)',
       }}
