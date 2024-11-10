@@ -38,7 +38,7 @@ export default async function Page({
       }}
     >
       <ChatHeader showAvatar={false} switchColors={true} />
-      <div className="bg-[#212226] grid place-items-center gap-2 text-white">
+      <div className="bg-[#212226] grid place-items-center gap-3 text-white">
         <Image
           src={`https://avatar.vercel.sh/${userId}`}
           alt={''}
@@ -47,8 +47,10 @@ export default async function Page({
           className="rounded-full"
         />
         <h1 className="text-3xl font-bold">{company.name}</h1>
-        <CompanyMatch match={90} />
-        match rate
+        <div className="flex flex-col gap-1">
+          <CompanyMatch match={90} className="size-24 text-2xl" />
+          <div className="text-center">match rate</div>
+        </div>
       </div>
 
       <Card className="bg-indigo-600 text-white max-w-xl mx-auto rounded-3xl">

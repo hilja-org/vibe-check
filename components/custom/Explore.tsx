@@ -24,9 +24,11 @@ export default function Explore({
   const [filter, setFilter] = useState<number>(0);
 
   const filteredCompanies = isExistingUser
-    ? companies.filter((c) =>
-        c.name.toLowerCase().includes(search.toLowerCase())
-      )
+    ? companies.filter((c) => {
+        //const searchMatches = search
+
+        return c.name.toLowerCase().includes(search.toLowerCase());
+      })
     : companies.slice(0, 2);
 
   return (
