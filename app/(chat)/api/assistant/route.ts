@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   const userId = cookieStore.get('user')?.value ?? '';
 
   // Create a thread if needed
-  const chatId = cookieStore.get('chat-id')?.value
+  const chatId = cookieStore.get('chat-id')?.value;
   const threadId = chatId ?? (await openai.beta.threads.create({})).id;
 
   if (!chatId) {
@@ -100,38 +100,42 @@ export async function POST(req: Request) {
         runResult?.status === 'requires_action' &&
         runResult.required_action?.type === 'submit_tool_outputs'
       ) {
-        const tool_outputs =
-          runResult.required_action.submit_tool_outputs.tool_calls.map(
-            (toolCall: any) => {
-              const parameters = JSON.parse(toolCall.function.arguments);
+        try {
+          const tool_outputs =
+            runResult.required_action.submit_tool_outputs.tool_calls.map(
+              (toolCall: any) => {
+                const parameters = JSON.parse(toolCall.function.arguments);
 
-              switch (toolCall.function.name) {
-                case 'store_tmt_results':
-                  updateUser(userId, parameters);
-                  return {
-                    ...toolCall,
-                    output: {
-                      type: 'text',
-                      text: 'Stored TMT results',
-                    },
-                  };
+                switch (toolCall.function.name) {
+                  case 'store_tmt_results':
+                    console.log(parameters, userId, 'setting user scores');
+                    updateUser(userId, parameters);
+                    return {
+                      tool_call_id: toolCall.id,
+                      output: 'Stored TMT results',
+                    };
 
-                default:
-                  throw new Error(
-                    `Unknown tool call function: ${toolCall.function.name}`
-                  );
+                  default:
+                    throw new Error(
+                      `Unknown tool call function: ${toolCall.function.name}`
+                    );
+                }
               }
-            }
-          );
+            );
 
-        runResult = await forwardStream(
-          openai.beta.threads.runs.submitToolOutputsStream(
-            threadId,
-            runResult.id,
-            { tool_outputs }
-          )
-        );
+          runResult = await forwardStream(
+            openai.beta.threads.runs.submitToolOutputsStream(
+              threadId,
+              runResult.id,
+              { tool_outputs }
+            )
+          );
+        } catch (error) {
+          console.error('Failed to submit tool outputs', error);
+          throw error;
+        }
       }
+
       if (runResult?.status === 'completed') {
         try {
           const messages = await openai.beta.threads.messages.list(threadId);

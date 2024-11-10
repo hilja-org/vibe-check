@@ -42,12 +42,26 @@ export async function getUser(id: string): Promise<User> {
 
 export async function updateUser(
   userId: User['id'],
-  { tmt_1, tmt_2, tmt_3, tmt_4, tmt_5, tmt_6 }: User
+  {
+    tmt_1,
+    tmt_2,
+    tmt_3,
+    tmt_4,
+    tmt_5,
+    tmt_6,
+  }: Record<keyof User, { score: number }>
 ) {
   try {
     return db
       .update(user)
-      .set({ tmt_1, tmt_2, tmt_3, tmt_4, tmt_5, tmt_6 })
+      .set({
+        tmt_1: String(tmt_1.score),
+        tmt_2: String(tmt_2.score),
+        tmt_3: String(tmt_3.score),
+        tmt_4: String(tmt_4.score),
+        tmt_5: String(tmt_5.score),
+        tmt_6: String(tmt_6.score),
+      })
       .where(eq(user.id, userId));
   } catch (error) {
     console.error('Failed to update user in database');
