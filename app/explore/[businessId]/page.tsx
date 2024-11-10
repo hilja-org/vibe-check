@@ -24,7 +24,7 @@ export default async function Page({
   const cookieStore = await cookies();
   const userId = cookieStore.get('user')?.value ?? '';
 
-  const user = (await getUser(userId))[0];
+  const user = await getUser(userId);
 
   if (!company) {
     return notFound();

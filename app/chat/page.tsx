@@ -3,17 +3,15 @@ import { notFound } from 'next/navigation';
 
 import { DEFAULT_MODEL_NAME, models } from '@/ai/models';
 import { Chat } from '@/components/custom/chat';
-import { getChatById, getMessagesByChatId } from '@/db/queries';
+import { getChatById, getMessagesByChatId, getUser } from '@/db/queries';
 import { convertToUIMessages } from '@/lib/utils';
 
 export default async function Page() {
   const cookieStore = await cookies();
-  const modelIdFromCookie = cookieStore.get('model-id')?.value;
   const chatIdFromCookie = cookieStore.get('chat-id')?.value ?? '';
+  const userId = cookieStore.get('user')?.value ?? '';
 
-  const selectedModelId =
-    models.find((model) => model.id === modelIdFromCookie)?.id ||
-    DEFAULT_MODEL_NAME;
+  const user = await getUser(userId);
 
   if (chatIdFromCookie) {
     const chat = await getChatById({ id: chatIdFromCookie });
@@ -29,10 +27,10 @@ export default async function Page() {
       <Chat
         id={chat?.id}
         initialMessages={convertToUIMessages(messagesFromDb)}
-        selectedModelId={selectedModelId}
+        user={user}
       />
     );
   }
 
-  return <Chat id="" initialMessages={[]} selectedModelId={selectedModelId} />;
+  return <Chat id="" initialMessages={[]} user={user} />;
 }
